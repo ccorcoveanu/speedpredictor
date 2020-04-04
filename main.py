@@ -13,8 +13,11 @@ data_dir = tf.keras.utils.get_file(
 data_dir = pathlib.Path(data_dir)
 image_count = len(list(data_dir.glob('*/*.jpg')))
 
+print('found ' + str(image_count) + ' images')
+
 CLASS_NAMES = np.array([item.name for item in data_dir.glob('*') if item.name != "LICENSE.txt"])
 
-roses = list(data_dir.glob('roses/*'))
-for image_path in roses[:3]:
-  print(image_path)
+
+list_ds = tf.data.Dataset.list_files(str(data_dir/'*/*'))
+for f in list_ds.take(5):
+  print(f.numpy())
